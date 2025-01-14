@@ -26,6 +26,7 @@
             <VBox class="sapUiLargeMargin">
                 <Text text="Welcome to About Page" />
                 <Text text="{userModel>/user/name}"></Text>
+                <Input value="{userModel>/user/name}"></Input>
             </VBox>
 
         </custom:content>
