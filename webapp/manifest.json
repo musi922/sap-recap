@@ -71,12 +71,30 @@
 					"pattern": "",
 					"name": "main",
 					"target": "main"
+				},
+				{
+					"pattern": "about",
+					"name": "about",
+					"target":"about"
+				},
+				{
+					"pattern": "contact",
+					"name": "contact",
+					"target":"contact"
 				}
 			],
 			"targets": {
 				"main": {
 					"viewId": "main",
 					"viewName": "Main"
+				},
+				"about":{
+					"viewId": "about",
+					"viewName": "About"
+				},
+				"contact":{
+					"viewId": "contact",
+					"viewName": "Contact"
 				}
 			}
 		}

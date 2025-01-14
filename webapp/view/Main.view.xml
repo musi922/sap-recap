@@ -12,9 +12,9 @@
         style="background-color: #f5f5f5;">
         
         <custom:navItems>
-            <Text text="Home" class="customPageNavText"/>
-            <Text text="About Us"  class="customPageNavText"/>
-            <Text text="Contact" class="customPageNavText"/>
+            <Link text="Home" class="customPageNavText" press="onHomePress"/>
+            <Link text="About Us"  class="customPageNavText" press="onAboutPress"/>
+            <Link text="Contact" class="customPageNavText" press="onContactPress"/>
         </custom:navItems>
 
         <custom:actions>

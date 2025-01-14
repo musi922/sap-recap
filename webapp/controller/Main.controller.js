@@ -53,151 +53,16 @@ sap.ui.define([
             });
         },
 
-        OnNavigateToCart: function() {
-            this.getRouter().navTo("cart");
+        onHomePress: function() {
+            this.getRouter().navTo("");
         },
-        onDeletePress: function(oEvent) {
-            const oContext = oEvent.getSource().getBindingContext("products");
-            const oProductId = oContext.getProperty("ProductId");
-        
-            MessageBox.confirm("Are you sure you want to delete this product?", {
-                title: "Confirm Deletion",
-                onClose: async (sAction) => {
-                    if (sAction === MessageBox.Action.OK) {
-                        try {
-                            const oModel = this.getView().getModel("products");
-                            
-                            await oModel.delete(`/Products('${oProductId}')`);
-                            
-                            this._applyProductFilter();
-        
-                            MessageBox.success("Product deleted successfully.");
-                        } catch (error) {
-                            console.error("Error deleting product:", error);
-                            MessageBox.error("Failed to delete the product.");
-                        }
-                    }
-                }
-            });
-        },
-        onEditPress: function(oEvent) {
-            const button = oEvent.getSource();
-            const listItem = button.getParent();
-            const oContext = listItem.getBindingContext("products");
-            const productData = oContext.getObject();
-            console.log(productData);
-            
-        
-            this._oEditContext = oContext; 
-            
-            this.byId("supplierName").setValue(productData.supplierName);
-            this.byId("category").setValue(productData.category);
-            this.byId("rating").setValue(productData.rating);
-            this.byId("price").setValue(productData.price);
-            this.byId("productId").setValue(productData.ProductId);
-            this.byId("productPicUrl").setValue(productData.productPicUrl);
-            this.byId("productName").setValue(productData.name);
-            this.byId("availability").setValue(productData.status);
-    
-
-
-           this.byId("editDiolog").open();
-        },
-        onCancelDialog: function() {
-            this.byId("editDiolog").close();
-        }
-        ,
-        
-        onConfirmEdit: async function() {
-            const Name = this.byId("productName").getValue();
-            const SupplierName = this.byId("supplierName").getValue();
-            const Category = this.byId("category").getValue();
-            const Rating = this.byId("rating").getValue();
-            const Price = this.byId("price").getValue();
-            const ProductId = this.byId("productId").getValue();
-            const ProductPicUrl = this.byId("productPicUrl").getValue();
-            const Availability = this.byId("availability").getValue();
-           
-
-            
-            if (!this._oEditContext) {
-                MessageBox.error("Product context is missing. Cannot update.");
-                return;
-            }
-        
-            const oProductId = this._oEditContext.getProperty("ProductId");
-        
-            try {
-                const bodyProduct = JSON.stringify({
-                    supplierName: SupplierName,
-                    category: Category,
-                    rating: Rating,
-                    price: Price,
-                    ProductId: ProductId,
-                    productPicUrl: ProductPicUrl,
-                    name: Name,
-                    status: Availability
-                });
-        
-                const response = await fetch(`http://localhost:4000/odata/Products('${oProductId}')`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: bodyProduct
-                });
-        
-                if (response.ok) {
-                    this.byId("editDiolog").close();
-                    this._applyProductFilter();
-                    MessageBox.success("Product updated successfully.");
-                } else {
-                    throw new Error(`Error: ${response.statusText}`);
-                }
-                    } catch (error) {
-                console.error("Error updating product:", error);
-                MessageBox.error("Failed to update the product.");
-            }
-        },
-        onLiveSearch: function(oEvent) {
-            let query = oEvent.getParameter("newValue");
-            let list = this.byId("idProductsTable");
-            let binding = list.getBinding("items");
-        
-            let aFilters = [];
-        
-            aFilters.push(new Filter("isInCart", FilterOperator.EQ, false));
-        
-            if (query) {
-                let queryNumber = parseInt(query);
-        
-                if (!isNaN(queryNumber)) {
-                    aFilters.push(
-                        new Filter({
-                            filters: [
-                                new Filter("price", FilterOperator.EQ, queryNumber),
-                            ],
-                            and: false
-                        })
-                    );
-                } else {
-                    aFilters.push(
-                        new Filter({
-                            filters: [
-                                new Filter("category", FilterOperator.Contains, query),
-                                new Filter("ProductId", FilterOperator.Contains, query),
-                                new Filter("name", FilterOperator.Contains, query),
-                                new Filter("supplierName", FilterOperator.Contains, query),
-                            ],
-                            and: false
-                        })
-                    );
-                }
-            }
-        
-            binding.filter(aFilters);
-        }
-        
+        onAboutPress(){
+			this.getRouter().navTo("about")
+		},
+        onContactPress(){
+			this.getRouter().navTo("about")
+		}
+      
         
         
         

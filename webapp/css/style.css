@@ -62,9 +62,11 @@
     flex-grow: 1;
 }
 .customPageNavText{
-    color: white;
+    color: white !important;
+    text-decoration: none;
     font-weight: bold;
 }
+
 
 .customPageActions {
     display: flex;
