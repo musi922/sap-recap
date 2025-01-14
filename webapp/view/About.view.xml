@@ -23,11 +23,12 @@
         </custom:actions>
 
         <custom:content>
-            <VBox class="sapUiLargeMargin">
-                <Text text="Welcome to About Page" />
-                <Text text="{userModel>/user/name}"></Text>
-                <Input value="{userModel>/user/name}"></Input>
-            </VBox>
+           <VBox class="sapUiLargeMargin" binding="{userModel>/user}">
+    <Text text="Welcome to About Page" />
+    <Text text="{userModel>name}" />
+    <Input value="{userModel>name}" />
+</VBox>
+
 
         </custom:content>
     </custom:CustomPage>
