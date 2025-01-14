@@ -1,23 +1,86 @@
 <mvc:View
-	controllerName="saprecap.controller.Main"
-	displayBlock="true"
-	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core"
-	xmlns:custom="saprecap.control"
-	core:require="{
-		formatter: 'saprecap/model/formatter'
-	}">
+    controllerName="saprecap.controller.Main"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:custom="saprecap.control">
 
-	<custom:CustomPage
-		title="Custom Page"
-		id="page">
-		<custom:content>
-			<VBox  class="sapUiLargeMargin">
-			<custom:CustomText text="Custom Text" style="color:#5B42F3; font-size:20px; font-weight: bold" visible="true"/>
-			<custom:CustomButton text="Custom Button"  class="mycustom" press="onButtonPress"/>
-			</VBox>
-		</custom:content>
-	</custom:CustomPage>
+    <custom:CustomPage
+        id="customPage"
+        title="{i18n>appTitle}"
+        logoSrc="netflix.png"
+        style="background-color: #f5f5f5;">
+        
+        <custom:navItems>
+            <Text text="Home" class="customPageNavText"/>
+            <Text text="About Us"  class="customPageNavText"/>
+            <Text text="Contact" class="customPageNavText"/>
+        </custom:navItems>
+
+        <custom:actions>
+            <Button icon="sap-icon://settings" press="onSettingsPress" />
+            <Button icon="sap-icon://log" press="onLogoutPress" />
+        </custom:actions>
+
+        <custom:content>
+            <VBox class="sapUiLargeMargin">
+                <Text text="Welcome to my Custom Page" />
+                <custom:CustomButton text="Button" press="onExplorePress" class="mycustom"/>
+            </VBox>
+			<Table id="idProductsTable"
+				
+						sticky="HeaderToolbar,ColumnHeaders"
+						inset="false"
+						items="{products>/Products}"
+					   class="sapFDynamicPageAlignContent ProductsTable"
+					   width="auto" growing="true" growingScrollToLoad="true" growingThreshold="20" mode="MultiSelect"
+					   
+					   >
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Products" level="H2"/>
+						</Toolbar>
+					</headerToolbar>
+					<columns>
+					<Column >
+					<Text text=""></Text>
+					</Column>
+						<Column>
+							<Text text="Product ID" />
+						</Column>
+						<Column>
+							<Text text="Name" />
+						</Column>
+						<Column>
+							<Text text="Supplier" />
+						</Column>
+						<Column>
+							<Text text="Category" />
+						</Column>
+						
+						<Column>
+							<Text text="Price" />
+						</Column>
+						
+					</columns>
+					<items>
+						<ColumnListItem type="Navigation" press="onProductPress" class="columnList">
+						<cells>
+						<Image src="{products>productPicUrl}" width="6rem"/>
+						<Text text="{products>ProductId}" />
+						<VBox >
+						<ObjectIdentifier title="{products>name}"/>
+						<ObjectStatus text="{products>status}" state="{= ${products>status} === 'In Stock'?'Success':'Error'}"></ObjectStatus>
+						</VBox>
+                        <Text text="{products>supplierName}" />
+                        <Text text="{products>category}" />
+                        <Text text="$ {products>price}" />
+						
+						</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+        </custom:content>
+    </custom:CustomPage>
 
 </mvc:View>

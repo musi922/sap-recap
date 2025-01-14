@@ -14,7 +14,7 @@
   line-height: 1em;
   max-width: 100%;
   min-width: 140px;
-  padding: 19px 24px;
+  padding: 10px 14px;
   text-decoration: none;
   user-select: none;
   -webkit-user-select: none;
@@ -34,3 +34,46 @@
     min-width: 196px;
   }
 }
+
+.customPage {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.customPageHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #007acc;
+    color: #fff;
+}
+
+.customPageLogo {
+    height: 40px;
+    width: auto;
+}
+
+.customPageNav {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-grow: 1;
+}
+.customPageNavText{
+    color: white;
+    font-weight: bold;
+}
+
+.customPageActions {
+    display: flex;
+    gap: 10px;
+}
+
+.customPageContent {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
