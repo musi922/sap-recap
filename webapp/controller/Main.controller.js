@@ -1,12 +1,12 @@
 sap.ui.define([
     "./BaseController", 
-    "sap/m/MessageBox",
+    "sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/odata/v4/ODataModel",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/odata/OperationMode"
-], function (BaseController, MessageBox, JSONModel, ODataModel, Filter, FilterOperator, OperationMode) {
+], function (BaseController, MessageToast, JSONModel, ODataModel, Filter, FilterOperator, OperationMode) {
     "use strict";
 
     return BaseController.extend("saprecap.controller.Main", {
@@ -61,7 +61,10 @@ sap.ui.define([
 		},
         onContactPress(){
 			this.getRouter().navTo("about")
-		}
+		},
+		onCustomButtonPress:function (oEvent) {
+            var sData = oEvent.getParameter("customData");
+            MessageToast.show(sData);}
       
         
         

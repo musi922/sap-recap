@@ -7,7 +7,9 @@ sap.ui.define(["sap/ui/core/Control"],(Control)=>{
                 class:{type:"string",defaultValue:""},
                 visible:{type:"boolean",defaultValue:true}
             },
-            events:{press:{}}
+            events:{"customPress":{parameters:{
+                "customData":{type:"string"}
+            }}}
         },
         renderer:{
             render(oRM,oControl){
@@ -20,7 +22,13 @@ sap.ui.define(["sap/ui/core/Control"],(Control)=>{
            
         },
         onclick(){
-            this.firePress()
+            this.setText("Submitting")
+            this.fireCustomPress({
+                customData: "Button Clicked: " + this.getText()
+            })
+            setTimeout(() => {
+                this.setText("Submited")
+            }, 2000);
         }
     })
 })

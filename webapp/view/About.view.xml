@@ -28,7 +28,7 @@
              <Text text="{userModel>name}" />
              <Input value="{userModel>name}" />
 
-                <custom:CustomButton text="Delete" press="onExplorePress" class="mycustom" visible="{userModel>/isDeleteVisible}"/>
+                <custom:CustomButton text="Delete" customPress=".onCustomButtonPress" class="mycustom" visible="{userModel>/isDeleteVisible}"/>
             </VBox>
 
 
