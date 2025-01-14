@@ -24,10 +24,12 @@
 
         <custom:content>
            <VBox class="sapUiLargeMargin" binding="{userModel>/user}">
-    <Text text="Welcome to About Page" />
-    <Text text="{userModel>name}" />
-    <Input value="{userModel>name}" />
-</VBox>
+             <Text text="Welcome to About Page" />
+             <Text text="{userModel>name}" />
+             <Input value="{userModel>name}" />
+
+                <custom:CustomButton text="Delete" press="onExplorePress" class="mycustom" visible="{userModel>/isDeleteVisible}"/>
+            </VBox>
 
 
         </custom:content>

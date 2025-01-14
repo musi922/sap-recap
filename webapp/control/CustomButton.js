@@ -4,14 +4,17 @@ sap.ui.define(["sap/ui/core/Control"],(Control)=>{
             properties:{
                 text:{type:"string", defaultValue:""},
                 style:{type:"string", defaultValue:""},
-                class:{type:"string",defaultValue:""}
+                class:{type:"string",defaultValue:""},
+                visible:{type:"boolean",defaultValue:true}
             },
             events:{press:{}}
         },
         renderer:{
             render(oRM,oControl){
                 oRM.openStart("button",oControl).class("customButton").class(oControl.getClass()).attr("style",oControl.getStyle()).openEnd()
-                oRM.text(oControl.getText())
+                if(oControl.getVisible()){
+                    oRM.text(oControl.getText())
+                }
                 oRM.close("button")
             },
            
