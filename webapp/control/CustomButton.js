@@ -6,6 +6,11 @@ sap.ui.define(["sap/ui/core/Control"],(Control)=>{
                 style:{type:"string", defaulValue:""},
                 class:{type:"string",defaulValue:""}
             }
+        },
+        renderer:{
+            render(oRM,oControl){
+                oRM.openStart("")
+            }
         }
     })
 })
