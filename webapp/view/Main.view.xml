@@ -9,15 +9,15 @@
 		formatter: 'saprecap/model/formatter'
 	}">
 
-	<Page
-		title="{i18n>appTitle}"
+	<custom:CustomPage
+		title="Custom Page"
 		id="page">
-		<content>
+		<custom:content>
 			<VBox  class="sapUiLargeMargin">
 			<custom:CustomText text="Custom Text" style="color:#5B42F3; font-size:20px; font-weight: bold" visible="true"/>
 			<custom:CustomButton text="Custom Button"  class="mycustom" press="onButtonPress"/>
 			</VBox>
-		</content>
-	</Page>
+		</custom:content>
+	</custom:CustomPage>
 
 </mvc:View>
