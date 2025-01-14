@@ -25,7 +25,11 @@
         <custom:content>
             <VBox class="sapUiLargeMargin">
                 <Text text="Welcome to my Custom Page" />
-                <custom:CustomButton text="Button" customPress=".onCustomButtonPress" class="mycustom"/>
+                <custom:CustomButton  text="Submit"
+
+    submitColor="red"
+    submissionStart=".onSubmissionStart"
+    submissionEnd=".onSubmissionEnd" customPress="onCustomButtonPress" class="mycustom"/>
             </VBox>
 			<Table id="idProductsTable"
 				

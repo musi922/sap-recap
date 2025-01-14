@@ -64,10 +64,15 @@ sap.ui.define([
 		},
 		onCustomButtonPress:function (oEvent) {
             var sData = oEvent.getParameter("customData");
-            MessageToast.show(sData);}
+            MessageToast.show(sData);},
       
         
         
-        
+			onSubmissionStart: function () {
+				console.log("Submission Started!");
+			},
+			onSubmissionEnd: function () {
+				console.log("Submission Ended!");
+			},
     });
 });

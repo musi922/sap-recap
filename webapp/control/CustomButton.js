@@ -5,11 +5,16 @@ sap.ui.define(["sap/ui/core/Control"],(Control)=>{
                 text:{type:"string", defaultValue:""},
                 style:{type:"string", defaultValue:""},
                 class:{type:"string",defaultValue:""},
-                visible:{type:"boolean",defaultValue:true}
+                visible:{type:"boolean",defaultValue:true},
+                submitting: { type: "boolean", defaultValue: false },
+                submitColor: { type: "string", defaultValue: "" }
             },
             events:{"customPress":{parameters:{
                 "customData":{type:"string"}
-            }}}
+            }},
+            "submissionStart": {},
+            "submissionEnd": {}  
+        }
         },
         renderer:{
             render(oRM,oControl){
@@ -22,13 +27,19 @@ sap.ui.define(["sap/ui/core/Control"],(Control)=>{
            
         },
         onclick(){
-            this.setText("Submitting")
-            this.fireCustomPress({
-                customData: "Button Clicked: " + this.getText()
-            })
+            if (this.getSubmitting()) {
+                return;
+            }
+
+            this.setSubmitting(true);
+            this.setText("Submitting");
+            this.fireEvent("submissionStart");
+
             setTimeout(() => {
-                this.setText("Submited")
-            }, 2000);
+                this.setSubmitting(false);
+                this.setText("Submit");
+                this.fireEvent("submissionEnd");
+            }, 2000); 
         }
     })
 })
