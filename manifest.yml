@@ -1,0 +1,13 @@
+---
+applications:
+- name: saprecap
+  instances: 1
+  memory: 512M
+  buildpacks:
+    - nodejs_buildpack
+  env:
+    NPM_CONFIG_PRODUCTION: false
+    NODE_ENV: production
+    UI5_MIDDLEWARE_LIVERELOAD_ENABLED: false
+  routes:
+    - route: saprecap-your-app.cfapps.us10-001.hana.ondemand.com
