@@ -82,6 +82,18 @@ sap.ui.define([
 
         onNavBack: function() {
             this.getRouter().navTo("main");
-        }
+        },
+        OnNavigateToCart(){
+            this.getRouter().navTo("cart");
+        },
+        onHomePress: function() {
+            this.getRouter().navTo("main");
+        },
+        onAboutPress(){
+			this.getRouter().navTo("about")
+		},
+        onContactPress(){
+			this.getRouter().navTo("about")
+		},
     });
 });

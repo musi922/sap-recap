@@ -4,10 +4,25 @@
 		xmlns="sap.m"
 		xmlns:f="sap.f"
 		xmlns:layout="sap.ui.layout"
-		height="100%">
-		<Page id="cartPage" showNavButton="true"  title="Your Cart Page" navButtonPress="onNavBack">
+		height="100%"
+        xmlns:custom="saprecap.control">
+
+
+		<custom:CustomPage id="cartPage" logoSrc="netflix.png"
+        style="background-color: #f5f5f5;" showNavButton="true"  title="Your Cart Page" navButtonPress="onNavBack">
+        <custom:navItems>
+            <Link text="Home" class="customPageNavText" press="onHomePress"/>
+            <Link text="About Us"  class="customPageNavText" press="onAboutPress"/>
+            <Link text="Contact" class="customPageNavText" press="onContactPress"/>
+        </custom:navItems>
+
+        <custom:actions>
+		    <Link text="CART" class="customPageNavText sapUiTinyMargin" press="OnNavigateToCart"/>
+            <Button icon="sap-icon://log" text="Logout" press="onLogoutPress" />
+        </custom:actions>
+
+        <custom:content>
         
-        <content>
         <Wizard id="wizardContentPage" complete="completedHandler" enableBranching="true">
         <WizardStep title="Shopping Cart Contents" icon="sap-icon://cart" id="ContentsStep" nextStep="PaymentTypeStep">
         <ObjectHeader title="List Of Your Shoppings">
@@ -33,6 +48,6 @@
         </WizardStep>
         
         </Wizard>
-        </content>
-        </Page>
+        </custom:content>
+        </custom:CustomPage>
 </mvc:View>

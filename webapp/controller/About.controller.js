@@ -20,8 +20,10 @@ sap.ui.define([
 		},
         onContactPress(){
 			this.getRouter().navTo("contact")
-		}
-      
+		},
+        OnNavigateToCart(){
+            this.getRouter().navTo("cart");
+        }
         
         
         
