@@ -15,6 +15,8 @@ sap.ui.define([
                 return;
             }
             const userData = JSON.parse(localStorage.getItem("user"));
+            console.log(userData);
+            
 
 
             const oModel = new ODataModel({

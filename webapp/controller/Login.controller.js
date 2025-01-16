@@ -20,7 +20,6 @@ sap.ui.define([
         
                 if (response.ok) {
                     const userData = await response.json();
-                    // Store the token and role
                     localStorage.setItem("user", JSON.stringify({
                         token: userData.token,
                         role: userData.role

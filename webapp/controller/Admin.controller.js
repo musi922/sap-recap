@@ -14,7 +14,7 @@ sap.ui.define([
         onUpdateProduct: async function(oEvent) {
             const oItem = oEvent.getSource().getBindingContext("products").getObject();
             try {
-                const response = await fetch("/odata/v4/product-service/Products/" + oItem.ProductId, {
+                const response = await fetch("http://localhost:4000/odata/Products" + oItem.ProductId, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
