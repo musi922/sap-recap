@@ -1,4 +1,4 @@
-<mvc:View
+<mvc:View xmlns:form="sap.ui.layout.form"
     controllerName="saprecap.controller.Admin"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc">
@@ -70,5 +70,33 @@
                 </items>
             </Table>
         </content>
+        <Dialog id="editDiolog">
+		<VBox >
+		<form:SimpleForm >
+		<Label text="Product Id"></Label>
+		<Input id="productId" editable="false" />
+		<Label text="Product Image"></Label>
+        <Input id="productPicUrl" editable="false" />
+		<Label text="Product Name"></Label>
+        <Input id="productName" editable="false" />
+		<Label text="Supplier Name"></Label>
+		<Input id="supplierName" placeholder="Enter the Product Supplier"></Input>
+		<Label text="Product Category"></Label>
+		<Input id="category" placeholder="Enter the Product Category"></Input>
+		<Label text="Rating"></Label>
+		<Input id="rating" placeholder="Enter the Product Rating" name="rating"></Input>
+		<Label text="Price"></Label>
+		<Input id="price" placeholder="Enter the Product Price"></Input>
+		<Label text="Availabilty"></Label>
+		<Input id="availability" placeholder="Enter the Availability"></Input>
+		</form:SimpleForm>
+		</VBox>
+		<beginButton >
+		<Button text="Save" press="onConfirmEdit"></Button>
+		</beginButton>
+		<endButton >
+		<Button text="Cancel" press="onCancelDialog"></Button>
+		</endButton>
+		</Dialog>
     </Page>
 </mvc:View>

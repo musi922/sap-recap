@@ -1,8 +1,10 @@
 sap.ui.define([
     "./BaseController",
     "sap/m/MessageBox",
-    "sap/m/MessageToast"
-], function (BaseController, MessageBox, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/ui/model/odata/v4/ODataModel",
+    "sap/ui/model/odata/OperationMode"
+], function (BaseController, MessageBox, MessageToast, ODataModel, OperationMode) {
     "use strict";
 
     return BaseController.extend("saprecap.controller.Admin", {
@@ -10,8 +12,17 @@ sap.ui.define([
             if (!this.checkRole("admin")) {
                 return;
             }
+            const userData = JSON.parse(localStorage.getItem("user"));
+            console.log(userData);
 
-            const oModel = this.getOwnerComponent().getModel("products");
+            const oModel = new ODataModel({
+                serviceUrl: "http://localhost:4000/odata/",
+                synchronizationMode: "None",
+                operationMode: OperationMode.Server,
+                httpHeaders: {
+                    "Authorization": `Bearer ${userData.token}`
+                }
+            });
             this.getView().setModel(oModel, "products");
         },
 
@@ -36,44 +47,82 @@ sap.ui.define([
             });
         },
 
-        onEditPress: function (oEvent) {
-            const oContext = oEvent.getSource().getBindingContext("products");
-            const oProduct = oContext.getObject();
-
+        onEditPress: function(oEvent) {
+            const button = oEvent.getSource();
+            const listItem = button.getParent();
+            const oContext = listItem.getBindingContext("products");
+            const productData = oContext.getObject();
+            
             this._oEditContext = oContext;
+            
+            this.byId("supplierName").setValue(productData.supplierName);
+            this.byId("category").setValue(productData.category);
+            this.byId("rating").setValue(productData.rating);
+            this.byId("price").setValue(productData.price);
+            this.byId("productId").setValue(productData.ProductId);
+            this.byId("productPicUrl").setValue(productData.productPicUrl);
+            this.byId("productName").setValue(productData.name);
+            this.byId("availability").setValue(productData.status);
 
-            const dialog = this._getEditDialog();
-            dialog.setModel(new sap.ui.model.json.JSONModel(oProduct));
-            dialog.open();
+            this.byId("editDiolog").open();
         },
 
-        _getEditDialog: function () {
-            if (!this._oEditDialog) {
-                this._oEditDialog = sap.ui.xmlfragment("saprecap.view.EditDialog", this);
-                this.getView().addDependent(this._oEditDialog);
-            }
-            return this._oEditDialog;
-        },
-
-        onConfirmEdit: async function () {
-            const oModel = this.getView().getModel("products");
-            const oProduct = this._oEditDialog.getModel().getData();
-
+        onConfirmEdit: async function() {
             try {
-                await oModel.update(`/Products('${oProduct.ProductId}')`, oProduct);
-                this._oEditDialog.close();
-                MessageToast.show("Product updated successfully.");
+                if (!this._oEditContext) {
+                    MessageBox.error("Product context is missing. Cannot update.");
+                    return;
+                }
+
+                const updatedData = {
+                    supplierName: this.byId("supplierName").getValue(),
+                    category: this.byId("category").getValue(),
+                    rating: parseFloat(this.byId("rating").getValue()),
+                    price: parseFloat(this.byId("price").getValue()),
+                    ProductId: this.byId("productId").getValue(),
+                    productPicUrl: this.byId("productPicUrl").getValue(),
+                    name: this.byId("productName").getValue(),
+                    status: this.byId("availability").getValue()
+                };
+
+                // Get the user data for the token
+                const userData = JSON.parse(localStorage.getItem("user"));
+                if (!userData || !userData.token) {
+                    throw new Error("Authentication token is missing");
+                }
+
+                const response = await fetch(
+                    `http://localhost:4000/odata/Products('${updatedData.ProductId}')`, 
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${userData.token}`
+                        },
+                        body: JSON.stringify(updatedData)
+                    }
+                );
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || `Error: ${response.statusText}`);
+                }
+
+                this.byId("editDiolog").close();
+                await this.getView().getModel("products").refresh();
+                MessageBox.success("Product updated successfully.");
+                
             } catch (error) {
                 console.error("Error updating product:", error);
-                MessageBox.error("Failed to update the product.");
+                MessageBox.error(error.message || "Failed to update the product.");
             }
         },
 
-        onCancelDialog: function () {
-            this._oEditDialog.close();
+        onCancelDialog: function() {
+            this.byId("editDiolog").close();
         },
 
-        onLogoutPress: function () {
+        onLogoutPress: function() {
             this.logout();
         }
     });
