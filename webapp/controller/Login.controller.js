@@ -9,23 +9,33 @@ sap.ui.define([
             const username = this.byId("username").getValue();
             const password = this.byId("password").getValue();
         
-            const response = await fetch("/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
-            });
+            try {
+                const response = await fetch("http://localhost:4000/odata/login", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
         
-            if (response.ok) {
-                const userData = await response.json();
-                localStorage.setItem("user", JSON.stringify(userData));
-                const role = userData.role;
+                if (response.ok) {
+                    const userData = await response.json();
+                    // Store the token and role
+                    localStorage.setItem("user", JSON.stringify({
+                        token: userData.token,
+                        role: userData.role
+                    }));
         
-                if (role === "admin") {
-                    this.getRouter().navTo("admin");
+                    if (userData.role === "admin") {
+                        this.getRouter().navTo("admin");
+                    } else {
+                        this.getRouter().navTo("main");
+                    }
                 } else {
-                    this.getRouter().navTo("main");
+                    sap.m.MessageToast.show("Login failed");
                 }
-            } else {
+            } catch (error) {
+                console.error("Login error:", error);
                 sap.m.MessageToast.show("Login failed");
             }
         }

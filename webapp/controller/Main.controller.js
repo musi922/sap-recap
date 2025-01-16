@@ -11,16 +11,29 @@ sap.ui.define([
 
     return BaseController.extend("saprecap.controller.Main", {
         onInit: function () {
+            if (!this.checkRole("user")) {
+                return;
+            }
+            const userData = JSON.parse(localStorage.getItem("user"));
+
+
             const oModel = new ODataModel({
                 serviceUrl: "http://localhost:4000/odata/",
                 synchronizationMode: "None",
-                operationMode: OperationMode.Server
+                operationMode: OperationMode.Server,
+                httpHeaders: {
+                    "Authorization": `Bearer ${userData.token}`
+                }
             });
             this.getView().setModel(oModel, "products");
             
             this._applyProductFilter();
 
           this.getRouter().getRoute("main").attachPatternMatched(this._onRouteMatched, this);
+          
+        },
+        onLogoutPress: function() {
+            this.logout();
         },
 
         _onRouteMatched: function() {

@@ -69,8 +69,18 @@
 			"routes": [
 				{
 					"pattern": "",
+					"name": "login",
+					"target": "login"
+				},
+				{
+					"pattern": "main",
 					"name": "main",
 					"target": "main"
+				},
+				{
+					"pattern": "admin",
+					"name": "admin",
+					"target": "admin"
 				},
 				{
 					"pattern": "about",
@@ -84,6 +94,15 @@
 				}
 			],
 			"targets": {
+				"login": {
+        "viewId": "login",
+        "viewName": "Login"
+    },
+    
+    "admin": {
+        "viewId": "admin",
+        "viewName": "Admin"
+    },
 				"main": {
 					"viewId": "main",
 					"viewName": "Main"
