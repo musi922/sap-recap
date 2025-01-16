@@ -18,7 +18,7 @@
         </custom:navItems>
 
         <custom:actions>
-            <Button icon="sap-icon://settings" press="onSettingsPress" />
+            <Button text="CART" press="OnNavigateToCart" class="sapUiLargePaddingBottom"/>
             <Button icon="sap-icon://log" text="Logout" press="onLogoutPress" />
         </custom:actions>
 

@@ -89,5 +89,8 @@ sap.ui.define([
 			onSubmissionEnd: function () {
 				console.log("Submission Ended!");
 			},
+            OnNavigateToCart(){
+                this.getRouter().navTo("cart");
+            }
     });
 });

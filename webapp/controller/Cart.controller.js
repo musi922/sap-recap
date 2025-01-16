@@ -2,14 +2,28 @@ sap.ui.define([
     "./BaseController", 
     "sap/m/MessageBox",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/model/odata/v4/ODataModel"
-], function (BaseController, MessageBox, JSONModel, ODataModel) {
+    "sap/ui/model/odata/v4/ODataModel",
+    "sap/ui/model/odata/OperationMode"
+
+], function (BaseController, MessageBox, JSONModel, ODataModel,OperationMode) {
     "use strict";
     return BaseController.extend("saprecap.controller.Cart", {
         onInit: function() {
+            if (!this.checkRole("user")) {
+                return;
+            }
+            const userData = JSON.parse(localStorage.getItem("user"));
+            console.log(userData);
+            
+
+
             const oModel = new ODataModel({
                 serviceUrl: "http://localhost:4000/odata/",
-                synchronizationMode: "None"
+                synchronizationMode: "None",
+                operationMode: OperationMode.Server,
+                httpHeaders: {
+                    "Authorization": `Bearer ${userData.token}`
+                }
             });
             
             this.getView().setModel(oModel);
