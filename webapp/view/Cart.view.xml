@@ -1,0 +1,38 @@
+<mvc:View xmlns:smarttable="sap.ui.comp.smarttable" xmlns:smartfilterbar="sap.ui.comp.smartfilterbar" xmlns:uxap="sap.uxap"
+    controllerName="saprecap.controller.Cart"
+    	xmlns:mvc="sap.ui.core.mvc"
+		xmlns="sap.m"
+		xmlns:f="sap.f"
+		xmlns:layout="sap.ui.layout"
+		height="100%">
+		<Page id="cartPage" showNavButton="true"  title="Your Cart Page" navButtonPress="onNavBack">
+        
+        <content>
+        <Wizard id="wizardContentPage" complete="completedHandler" enableBranching="true">
+        <WizardStep title="Shopping Cart Contents" icon="sap-icon://cart" id="ContentsStep" nextStep="PaymentTypeStep">
+        <ObjectHeader title="List Of Your Shoppings">
+        <attributes>
+        <ObjectAttribute class="cartTitle" text="This is the list of your shopping cart"></ObjectAttribute>
+        </attributes>
+        </ObjectHeader>
+        <List headerText="Items" mode="Delete" delete="handleDelete" items="{cart>/getCartItems}" noDataText="Your Cart is Empty" enableBusyIndicator="true">
+        <StandardListItem title="{cart>product_ProductId/name}" icon="{cart>product_ProductId/productPicUrl}" description="{cart>product_ProductId/description}" info="{cart>product_ProductId/price} {cart>product_ProductId/currencyCode}"></StandardListItem>
+        </List>
+        </WizardStep>
+        <WizardStep title="Payement Method" icon="sap-icon://money-bills" id="PaymentTypeStep">
+        <Text class="sapUiSmallMarginBottom" text="We accept all major credit cards. No extra cost will be charged when paying with a credit card. Bank transfer and Cash on delivery are only possible for inland deliveries. A service charge of 2.99 EUR will be charged for these types of deliveries. Be aware, that for Bank transfers, the shipping will start on the day after the payment is received."/>
+        <HBox alignItems="Center" justifyContent="Center" width="100%">
+        <SegmentedButton >
+        <items>
+        <SegmentedButtonItem key="Credit Card" icon="sap-icon://credit-card" text="Credit Card"/>
+        <SegmentedButtonItem key="Bank Transfer" icon="sap-icon://official-service" text="Bank Transfer"/>
+        <SegmentedButtonItem key="Mobile Money" icon="sap-icon://money-bills" text="Mobile Money"/>
+        </items>
+        </SegmentedButton>
+        </HBox>
+        </WizardStep>
+        
+        </Wizard>
+        </content>
+        </Page>
+</mvc:View>
