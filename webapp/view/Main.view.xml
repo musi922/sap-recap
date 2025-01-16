@@ -19,7 +19,7 @@
 
         <custom:actions>
             <Button icon="sap-icon://settings" press="onSettingsPress" />
-            <Button icon="sap-icon://log" press="onLogoutPress" />
+            <Button icon="sap-icon://log" text="Logout" press="onLogoutPress" />
         </custom:actions>
 
         <custom:content>

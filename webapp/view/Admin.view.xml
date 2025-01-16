@@ -4,7 +4,7 @@
     xmlns:mvc="sap.ui.core.mvc">
     <Page title="Admin Dashboard">
         <headerContent>
-            <Button icon="sap-icon://log" press="onLogoutPress" />
+            <Button icon="sap-icon://log" text="Logout" type="Emphasized" press="onLogoutPress" />
         </headerContent>
         <content>
             <Table id="idProductsTables"
