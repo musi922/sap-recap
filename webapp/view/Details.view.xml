@@ -1,0 +1,307 @@
+<mvc:View
+    xmlns:form="sap.ui.layout.form"
+    xmlns:vbm="sap.ui.vbm"
+    xmlns:core="sap.ui.core"
+    xmlns:smarttable="sap.ui.comp.smarttable"
+    xmlns:smartfilterbar="sap.ui.comp.smartfilterbar"
+    xmlns:uxap="sap.uxap"
+    controllerName="saprecap.controller.Details"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    height="100%"
+>
+    <uxap:ObjectPageLayout id="ObjectPageLayout" class="ObjectPageLayout">
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle class="dd">
+                <uxap:heading>
+                    <HBox alignItems="Center">
+                        <Avatar
+                            displaySize="S"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <Title
+                            text="Product Details"
+                            wrapping="true"
+                            class="detailsProduct"
+                        />
+                    </HBox>
+                </uxap:heading>
+                <uxap:actions>
+                    <Button
+                        icon="sap-icon://nav-back"
+                        press="onNavBack"
+                        text="Back"
+                    />
+                    <Button icon="sap-icon://search" />
+                    <Button icon="sap-icon://bell" />
+                    <Button icon="sap-icon://overflow" />
+                    <Button icon="sap-icon://grid" />
+                </uxap:actions>
+            </uxap:ObjectPageDynamicHeaderTitle>
+        </uxap:headerTitle>
+        <uxap:headerContent>
+            <VBox>
+                <TabContainer
+                    id="productTabContainer"
+                    selectedItem="onTabSelect"
+                >
+                     <items>
+        <TabContainerItem name="{name}" />
+    </items>
+                </TabContainer>
+                <VBox class="sapUiSmallMarginBottom sapUiTinyMarginTop">
+                    <Title text="{name}" />
+                    <Label text="{ProductId}" />
+                </VBox>
+                <layout:HorizontalLayout>
+                    <HBox class="horizonta">
+                        <Image
+                            src="{productPicUrl}"
+                            width="4rem"
+                        />
+                        <VBox class="sapUiSmallMarginEnd">
+                            <Label text="Price:" />
+                            <ObjectNumber
+                                number="{price}"
+                                unit="USD"
+                                class="price"
+                            />
+                        </VBox>
+                        <VBox class="sapUiSmallMarginEnd">
+                            <Label text="Availability:" />
+                            <ObjectStatus
+                                text="{status}"
+                                state="{= ${status} === 'In Stock' ? 'Success' : 'Error'}"
+                                class="price"
+                            />
+                        </VBox>
+                        <VBox class="sapUiSmallMarginEnd">
+                            <Label text="General Information:" />
+                            <HBox>
+                                <Label text="Category:" />
+                                <Text text="{category}" />
+                            </HBox>
+                            <HBox>
+                                <Label text="Sub-Category:" />
+                                <Text text="{mainCategory}" />
+                            </HBox>
+                            <HBox>
+                                <Label text="Supplier:" />
+                                <Text
+                                    text="{supplierName}"
+                                    class="bluees"
+                                />
+                            </HBox>
+                        </VBox>
+
+                        <VBox class="sapUiSmallMarginEnd">
+                            <Label text="Description:" />
+                            <Text
+                                width="200px"
+                                text="{description}"
+                            />
+                        </VBox>
+                        <VBox>
+                            <Label text="Rating:" />
+                            <Text text="Average Rating" />
+                            <RatingIndicator
+                                value="{rating}"
+                                maxValue="5"
+                            />
+                            <Text
+                                text="Out of 5 ratings"
+                                class="bluees"
+                            />
+                        </VBox>
+                        <Button text="Add To CART" type="Emphasized" press="onAddToCart"/>
+                    </HBox>
+                </layout:HorizontalLayout>
+            </VBox>
+        </uxap:headerContent>
+        <uxap:sections>
+            <uxap:ObjectPageSection title="Product Information">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <VBox class="sapUiSmallMargin">
+                                <Label
+                                    text="Product Dimensions (Height x Width x Depth)"
+                                    class="sapUiSmallMarginBottom"
+                                />
+                                <Label
+                                    text="{height} x {width} x {depth} CM"
+                                />
+                                <Label text="Weight:" />
+                                <Label
+                                    text="{weightMeasure} {weightUnit}"
+                                />
+                            </VBox>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            <uxap:ObjectPageSection
+                title="Reviews"
+                titleUppercase="false"
+            >
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <Table id="ReviewsTable">
+                                <columns>
+                                    <Column>
+                                        <Text text="Rating" />
+                                    </Column>
+                                    <Column>
+                                        <Text text="Review" />
+                                    </Column>
+
+                                    <Column>
+                                        <Text text="" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <HBox
+                                                alignItems="Center"
+                                                justifyContent="Inherit"
+                                                class="hb"
+                                            >
+                                                <RatingIndicator
+                                                    iconSize="17px"
+                                                    value="{rating}"
+                                                    maxValue="5"
+                                                />
+                                                <Text text="(3 of 5)" />
+                                                <Title
+                                                    text="Samuel Seychelle"
+                                                    class="sapUiSmallMargin"
+                                                />
+                                            </HBox>
+                                            <Text
+                                                class="sapUiLargeMarginEnd"
+                                                text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris "
+                                            />
+                                            <VBox>
+                                                <Text text="Is Helpful (2)" />
+                                                <Text
+                                                    text="Rate as Helpful"
+                                                    class="bluees"
+                                                />
+                                            </VBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <HBox
+                                                alignItems="Center"
+                                                justifyContent="Inherit"
+                                                class="hb"
+                                            >
+                                                <RatingIndicator
+                                                    iconSize="17px"
+                                                    value="{rating}"
+                                                    maxValue="5"
+                                                />
+                                                <Text text="(4 of 5)" />
+                                                <Title
+                                                    text="Albert Denis"
+                                                    class="sapUiSmallMargin"
+                                                />
+                                            </HBox>
+                                            <Text
+                                                class="sapUiLargeMarginEnd"
+                                                text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris "
+                                            />
+                                            <VBox>
+                                                <Text text="Is Helpful (2)" />
+                                                <Text
+                                                    text="Rate as Helpful"
+                                                    class="bluees"
+                                                />
+                                            </VBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <HBox
+                                                alignItems="Center"
+                                                justifyContent="Inherit"
+                                                class="hb"
+                                            >
+                                                <RatingIndicator
+                                                    iconSize="17px"
+                                                    value="{rating}"
+                                                    maxValue="5"
+                                                />
+                                                <Text text="(3 of 5)" />
+                                                <Title
+                                                    text="Joshua Peterson"
+                                                    class="sapUiSmallMargin"
+                                                />
+                                            </HBox>
+                                            <Text
+                                                class="sapUiLargeMarginEnd"
+                                                text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris "
+                                            />
+                                            <VBox>
+                                                <Text text="Is Helpful (2)" />
+                                                <Text
+                                                    text="Rate as Helpful"
+                                                    class="bluees"
+                                                />
+                                            </VBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <HBox
+                                                alignItems="Center"
+                                                justifyContent="Inherit"
+                                                class="hb"
+                                            >
+                                                <RatingIndicator
+                                                    iconSize="17px"
+                                                    value="{rating}"
+                                                    maxValue="5"
+                                                />
+                                                <Text text="(3 of 5)" />
+                                                <Title
+                                                    text="Water Janipher"
+                                                    class="sapUiSmallMargin"
+                                                />
+                                            </HBox>
+                                            <Text
+                                                class="sapUiLargeMarginEnd"
+                                                text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris "
+                                            />
+                                            <VBox>
+                                                <Text text="Is Helpful (2)" />
+                                                <Text
+                                                    text="Rate as Helpful"
+                                                    class="bluees"
+                                                />
+                                            </VBox>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
+    </uxap:ObjectPageLayout>
+    <Dialog id="addToCart" title="Confirm">
+    <Text text="Do You Want To Add To Cart" class="sapUiSmallMargin"/>
+    <beginButton>
+    <Button text="Add" type="Emphasized" press="onConfirmAddToCart"/>
+    </beginButton>
+    <endButton>
+        <Button text="Cancel" press="onCancelDialog"/>
+    </endButton>
+    </Dialog>
+</mvc:View>

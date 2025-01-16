@@ -91,6 +91,15 @@
 					"pattern": "contact",
 					"name": "contact",
 					"target":"contact"
+				},{
+					"pattern": "details/{ProductId}",
+					"name": "details",
+					"target": "details"
+				},
+				{
+					"pattern": "cart",
+					"name": "cart",
+					"target": "cart"
 				}
 			],
 			"targets": {
@@ -114,6 +123,14 @@
 				"contact":{
 					"viewId": "contact",
 					"viewName": "Contact"
+				},
+				"details": {
+					"viewId": "details",
+					"viewName": "Details"
+				},
+				"cart": {
+					"viewId": "cart",
+					"viewName": "Cart"
 				}
 			}
 		}
