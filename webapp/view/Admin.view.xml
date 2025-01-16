@@ -7,22 +7,64 @@
             <Button icon="sap-icon://log" press="onLogoutPress" />
         </headerContent>
         <content>
-            <Table id="productsManagementTable"
+            <Table id="idProductsTables"
+                sticky="HeaderToolbar,ColumnHeaders"
+                inset="false"
                 items="{products>/Products}"
-                mode="SingleSelect">
+                class="sapFDynamicPageAlignContent ProductsTable"
+                width="auto"
+                growing="true"
+                growingScrollToLoad="true"
+                growingThreshold="20"
+                mode="MultiSelect">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Products" level="H2" />
+                    </Toolbar>
+                </headerToolbar>
                 <columns>
-                    <Column><Text text="Product ID" /></Column>
-                    <Column><Text text="Name" /></Column>
-                    <Column><Text text="Price" /></Column>
-                    <Column><Text text="Actions" /></Column>
+                    <Column>
+                        <Text text="Image" />
+                    </Column>
+                    <Column>
+                        <Text text="Product ID" />
+                    </Column>
+                    <Column>
+                        <Text text="Name" />
+                    </Column>
+                    <Column>
+                        <Text text="Supplier" />
+                    </Column>
+                    <Column>
+                        <Text text="Category" />
+                    </Column>
+                    <Column>
+                        <Text text="Rating" />
+                    </Column>
+                    <Column>
+                        <Text text="Price" />
+                    </Column>
+                    <Column>
+                        <Text text="Actions" />
+                    </Column>
                 </columns>
                 <items>
                     <ColumnListItem>
                         <cells>
+                            <Image src="{products>productPicUrl}" width="6rem" />
                             <Text text="{products>ProductId}" />
-                            <Input value="{products>name}" />
-                            <Input value="{products>price}" />
-                            <Button text="Update" press="onUpdateProduct" />
+                            <VBox>
+                                <ObjectIdentifier title="{products>name}" />
+                                <ObjectStatus text="{products>status}" state="{= ${products>status} === 'In Stock' ? 'Success' : 'Error'}" />
+                            </VBox>
+                            <Text text="{products>supplierName}" />
+                            <Text text="{products>category}" />
+                            <RatingIndicator value="{products>rating}" maxValue="5" />
+                            <Text text="$ {products>price}" />
+                            <HBox>
+                                <Button icon="sap-icon://delete" press="onDeletePress" class="delete" />
+                                <Button icon="sap-icon://edit" press="onEditPress" class="edit" />
+                            </HBox>
                         </cells>
                     </ColumnListItem>
                 </items>
