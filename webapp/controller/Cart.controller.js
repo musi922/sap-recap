@@ -33,8 +33,9 @@ sap.ui.define([
             });
             this.getView().setModel(oCartModel, "cart");
             
-            this.getRouter().getRoute("cart").attachPatternMatched(this._onRouteMatched, this);
-        },
+            this.getRouter().getRoute("cart").attachPatternMatched(() => {
+                this._loadCartItems(); // Reload cart items when route changes
+            });        },
         _onRouteMatched: function() {
             this._loadCartItems();
         },
