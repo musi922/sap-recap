@@ -29,7 +29,6 @@ sap.ui.define(["sap/ui/test/Opa5", "sap/ui/test/actions/Press"], function (Opa5,
 					return this.waitFor({
 						controlType: "sap.m.Dialog",
 						success: function () {
-							// we set the view busy, so we need to query the parent of the app
 							Opa5.assert.ok(true, "The dialog is open");
 						},
 						errorMessage: "Did not find the dialog control"
@@ -38,7 +37,7 @@ sap.ui.define(["sap/ui/test/Opa5", "sap/ui/test/actions/Press"], function (Opa5,
 
 				iShouldNotSeeTheHelloDialog: function () {
 					return this.waitFor({
-						controlType: "sap.m.App", // dummy, I just want a check function, where I can search the DOM. Probably there is a better way for a NEGATIVE test (NO dialog).
+						controlType: "sap.m.App",
 						check: function () {
 							return document.querySelectorAll(".sapMDialog").length === 0;
 						},

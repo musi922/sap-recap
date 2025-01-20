@@ -23,7 +23,6 @@ const proxy = createProxyMiddleware({
         '^/odata': ''
     },
     onProxyReq: (proxyReq, req, res) => {
-        // Forward the authorization header from the original request
         if (req.headers.authorization) {
             proxyReq.setHeader('Authorization', req.headers.authorization);
         }

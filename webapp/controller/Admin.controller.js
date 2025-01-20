@@ -85,7 +85,6 @@ sap.ui.define([
                     status: this.byId("availability").getValue()
                 };
 
-                // Get the user data for the token
                 const userData = JSON.parse(localStorage.getItem("user"));
                 if (!userData || !userData.token) {
                     throw new Error("Authentication token is missing");

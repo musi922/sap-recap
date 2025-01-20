@@ -50,7 +50,6 @@ sap.ui.define([
                 if (oBinding) {
                     const oFilter = new Filter("isInCart", FilterOperator.EQ, false);
                     
-                    // Refresh the binding before applying the filter
                     await oBinding.refresh();
                     await oBinding.filter([oFilter]);
                 }

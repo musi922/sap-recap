@@ -69,7 +69,6 @@ sap.ui.define([
                 
                 
                 this.getRouter().navTo("cart",{},true);
-                //refresh the cart page
 
             } catch (error) {
                 MessageBox.error("Failed to add product to cart");

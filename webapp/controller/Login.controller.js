@@ -22,7 +22,6 @@ sap.ui.define([
                     const userData = await response.json();
                     console.log("Login Response:", userData);
                     
-                    // Check for valid role
                     if (!userData.role) {
                         console.error("No role received from server");
                         sap.m.MessageToast.show("Server error: No role assigned");
@@ -34,7 +33,6 @@ sap.ui.define([
                         role: userData.role
                     }));
         
-                    // Navigate based on role
                     if (userData.role === "admin") {
                         this.getRouter().navTo("admin");
                     } else if (userData.role === "user") {
