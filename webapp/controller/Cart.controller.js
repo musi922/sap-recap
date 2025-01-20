@@ -96,5 +96,8 @@ sap.ui.define([
         onContactPress(){
 			this.getRouter().navTo("about")
 		},
+        onLogoutPress: function() {
+            this.logout();
+        }
     });
 });
