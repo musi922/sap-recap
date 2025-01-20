@@ -20,25 +20,39 @@ sap.ui.define([
         
                 if (response.ok) {
                     const userData = await response.json();
+                    console.log("Login Response:", userData);
+                    
+                    // Check for valid role
+                    if (!userData.role) {
+                        console.error("No role received from server");
+                        sap.m.MessageToast.show("Server error: No role assigned");
+                        return;
+                    }
+        
                     localStorage.setItem("user", JSON.stringify({
                         token: userData.token,
                         role: userData.role
                     }));
         
+                    // Navigate based on role
                     if (userData.role === "admin") {
                         this.getRouter().navTo("admin");
-                    } else {
+                    } else if (userData.role === "user") {
                         this.getRouter().navTo("main");
+                    } else {
+                        console.error("Unexpected role:", userData.role);
+                        sap.m.MessageToast.show("Invalid user role");
                     }
                 } else {
-                    sap.m.MessageToast.show("Login failed");
+                    const errorData = await response.json().catch(() => ({}));
+                    console.error("Login failed:", errorData);
+                    sap.m.MessageToast.show(errorData.message || "Login failed");
                 }
             } catch (error) {
                 console.error("Login error:", error);
                 sap.m.MessageToast.show("Login failed");
             }
         }
-        
         
         
     });

@@ -23,6 +23,11 @@ const proxy = createProxyMiddleware({
         '^/odata': ''
     },
     onProxyReq: (proxyReq, req, res) => {
+        // Forward the authorization header from the original request
+        if (req.headers.authorization) {
+            proxyReq.setHeader('Authorization', req.headers.authorization);
+        }
+        
         proxyReq.setHeader('OData-Version', '4.0');
         proxyReq.setHeader('Accept', 'application/json;odata.metadata=minimal;IEEE754Compatible=true');
         
@@ -30,19 +35,6 @@ const proxy = createProxyMiddleware({
             proxyReq.setHeader('Content-Type', 'multipart/mixed;boundary=batch_');
         }
     },
-    onProxyRes: (proxyRes, req, res) => {
-        proxyRes.headers['odata-version'] = '4.0';
-        
-        if (req.url.includes('$batch')) {
-            proxyRes.headers['content-type'] = 'multipart/mixed;boundary=batch_';
-        } else {
-            proxyRes.headers['content-type'] = 'application/json;odata.metadata=minimal;IEEE754Compatible=true';
-        }
-    },
-    onError: (err, req, res) => {
-        console.error('Proxy Error:', err);
-        res.status(500).send('Proxy Error');
-    }
 });
 
 app.use("/odata", proxy);
