@@ -1,13 +1,78 @@
-<mvc:View xmlns:form="sap.ui.layout.form"
+<mvc:View xmlns:table="sap.ui.table"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:F="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc"
     controllerName="saprecap.controller.Admin"
-    xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc">
-    <Page title="Admin Dashboard">
-        <headerContent>
-            <Button icon="sap-icon://log" text="Logout" type="Emphasized" press="onLogoutPress" />
-        </headerContent>
-        <content>
-            <Table id="idProductsTables"
+    >
+    <ObjectPageLayout id="ObjectPageLayouts" showTitleInHeaderContent="true" alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false"
+    headerContentPinnable="true" isChildPage="true" upperCaseAnchorBar="false">
+  <headerTitle>
+	<ObjectPageDynamicHeaderTitle>
+		<breadcrumbs>
+			<m:Breadcrumbs currentLocationText="My Profile">
+				<m:Link text='Moyo Tech' />
+				<m:Link text='Developers' />
+				<m:Link text='Teams' />
+			</m:Breadcrumbs>
+		</breadcrumbs>
+
+		<expandedHeading>
+			<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+				<m:Title text="Moyo Tech" wrapping="true" class="sapUiTinyMarginEnd"/>
+				
+			</m:FlexBox>
+		</expandedHeading>
+
+		<snappedHeading>
+			<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+				<m:FlexBox wrap="NoWrap" fitContainer="true" alignItems="Center" class="sapUiTinyMarginEnd">
+					<m:Title text="Moyo Tech" wrapping="true" class="sapUiTinyMarginEnd"/>
+				</m:FlexBox>
+				
+			</m:FlexBox>
+		</snappedHeading>
+
+		<expandedContent>
+			<m:Text text="SAP Developers" />
+		</expandedContent>
+
+		<snappedContent>
+		   <m:Text text="Senior Developer" />
+		</snappedContent>
+
+		<actions>
+        <m:Button icon="sap-icon://log" text="Logout" type="Emphasized" press="onLogoutPress" />
+		</actions>
+
+		<navigationActions>
+			<m:OverflowToolbarButton type="Transparent" icon="sap-icon://full-screen" tooltip="Enter Full Screen Mode"/>
+			<m:OverflowToolbarButton type="Transparent" icon="sap-icon://decline" tooltip="Close column"/>
+		</navigationActions>
+
+	</ObjectPageDynamicHeaderTitle>
+</headerTitle>
+<headerContent>
+<m:FlexBox wrap="Wrap" fitContainer="true" alignContent="Stretch">
+<m:Avatar displaySize="L" displayShape="Square" class="sapUiTinyMarginEnd"></m:Avatar>
+<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+<m:Label text="Main Product"></m:Label>
+</m:VBox>
+<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+<m:Label text="Sub Product"></m:Label>
+</m:VBox>
+<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+<m:Label text="Price"></m:Label>
+</m:VBox>
+</m:FlexBox>
+</headerContent>
+<sections>
+<ObjectPageSection title="Products Table">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							 <m:Table id="idProductsTables"
                 sticky="HeaderToolbar,ColumnHeaders"
                 inset="false"
                 items="{products>/Products}"
@@ -17,86 +82,93 @@
                 growingScrollToLoad="true"
                 growingThreshold="20"
                 mode="MultiSelect">
-                <headerToolbar>
-                    <Toolbar>
-                        <Title text="Products" level="H2" />
-                    </Toolbar>
-                </headerToolbar>
-                <columns>
-                    <Column>
-                        <Text text="Image" />
-                    </Column>
-                    <Column>
-                        <Text text="Product ID" />
-                    </Column>
-                    <Column>
-                        <Text text="Name" />
-                    </Column>
-                    <Column>
-                        <Text text="Supplier" />
-                    </Column>
-                    <Column>
-                        <Text text="Category" />
-                    </Column>
-                    <Column>
-                        <Text text="Rating" />
-                    </Column>
-                    <Column>
-                        <Text text="Price" />
-                    </Column>
-                    <Column>
-                        <Text text="Actions" />
-                    </Column>
-                </columns>
-                <items>
-                    <ColumnListItem>
-                        <cells>
-                            <Image src="{products>productPicUrl}" width="6rem" />
-                            <Text text="{products>ProductId}" />
-                            <VBox>
-                                <ObjectIdentifier title="{products>name}" />
-                                <ObjectStatus text="{products>status}" state="{= ${products>status} === 'In Stock' ? 'Success' : 'Error'}" />
-                            </VBox>
-                            <Text text="{products>supplierName}" />
-                            <Text text="{products>category}" />
-                            <RatingIndicator value="{products>rating}" maxValue="5" />
-                            <Text text="$ {products>price}" />
-                            <HBox>
-                                <Button icon="sap-icon://delete" press="onDeletePress" class="delete" />
-                                <Button icon="sap-icon://edit" press="onEditPress" class="edit" />
-                            </HBox>
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
-        </content>
-        <Dialog id="editDiolog">
-		<VBox >
+                <m:headerToolbar>
+                    <m:Toolbar>
+                        <m:Title text="Products" level="H2" />
+                    </m:Toolbar>
+                </m:headerToolbar>
+                <m:columns>
+                    <m:Column>
+                        <m:Text text="Image" />
+                    </m:Column>
+                    <m:Column>
+                        <m:Text text="Product ID" />
+                    </m:Column>
+                    <m:Column>
+                        <m:Text text="Name" />
+                    </m:Column>
+                    <m:Column>
+                        <m:Text text="Supplier" />
+                    </m:Column>
+                    <m:Column>
+                        <m:Text text="Category" />
+                    </m:Column>
+                    <m:Column>
+                        <m:Text text="Rating" />
+                    </m:Column>
+                    <m:Column>
+                        <m:Text text="Price" />
+                    </m:Column>
+                    <m:Column>
+                        <m:Text text="Actions" />
+                    </m:Column>
+                </m:columns>
+                <m:items>
+                    <m:ColumnListItem>
+                        <m:cells>
+                            <m:Image src="{products>productPicUrl}" width="6rem" />
+                            <m:Text text="{products>ProductId}" />
+                            <m:VBox>
+                                <m:ObjectIdentifier title="{products>name}" />
+                                <m:ObjectStatus text="{products>status}" state="{= ${products>status} === 'In Stock' ? 'Success' : 'Error'}" />
+                            </m:VBox>
+                            <m:Text text="{products>supplierName}" />
+                            <m:Text text="{products>category}" />
+                            <m:RatingIndicator value="{products>rating}" maxValue="5" />
+                            <m:Text text="$ {products>price}" />
+                            <m:HBox>
+                                <m:Button icon="sap-icon://delete" press="onDeletePress" class="delete" />
+                                <m:Button icon="sap-icon://edit" press="onEditPress" class="edit" />
+                            </m:HBox>
+                        </m:cells>
+                    </m:ColumnListItem>
+                </m:items>
+            </m:Table>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+</sections>
+
+    </ObjectPageLayout>
+     <m:Dialog id="editDiolog">
+		<m:VBox >
 		<form:SimpleForm >
-		<Label text="Product Id"></Label>
-		<Input id="productId" editable="false" />
-		<Label text="Product Image"></Label>
-        <Input id="productPicUrl" editable="false" />
-		<Label text="Product Name"></Label>
-        <Input id="productName" editable="false" />
-		<Label text="Supplier Name"></Label>
-		<Input id="supplierName" placeholder="Enter the Product Supplier"></Input>
-		<Label text="Product Category"></Label>
-		<Input id="category" placeholder="Enter the Product Category"></Input>
-		<Label text="Rating"></Label>
-		<Input id="rating" placeholder="Enter the Product Rating" name="rating"></Input>
-		<Label text="Price"></Label>
-		<Input id="price" placeholder="Enter the Product Price"></Input>
-		<Label text="Availabilty"></Label>
-		<Input id="availability" placeholder="Enter the Availability"></Input>
+		<m:Label text="Product Id"></m:Label>
+		<m:Input id="productId" editable="false" />
+		<m:Label text="Product Image"></m:Label>
+        <m:Input id="productPicUrl" editable="false" />
+		<m:Label text="Product Name"></m:Label>
+        <m:Input id="productName" editable="false" />
+		<m:Label text="Supplier Name"></m:Label>
+		<m:Input id="supplierName" placeholder="Enter the Product Supplier"></m:Input>
+		<m:Label text="Product Category"></m:Label>
+		<m:Input id="category" placeholder="Enter the Product Category"></m:Input>
+		<m:Label text="Rating"></m:Label>
+		<m:Input id="rating" placeholder="Enter the Product Rating" name="rating"></m:Input>
+		<m:Label text="Price"></m:Label>
+		<m:Input id="price" placeholder="Enter the Product Price"></m:Input>
+		<m:Label text="Availabilty"></m:Label>
+		<m:Input id="availability" placeholder="Enter the Availability"></m:Input>
 		</form:SimpleForm>
-		</VBox>
-		<beginButton >
-		<Button text="Save" press="onConfirmEdit"></Button>
-		</beginButton>
-		<endButton >
-		<Button text="Cancel" press="onCancelDialog"></Button>
-		</endButton>
-		</Dialog>
-    </Page>
+		</m:VBox>
+		<m:beginButton >
+		<m:Button text="Save" press="onConfirmEdit"></m:Button>
+		</m:beginButton>
+		<m:endButton >
+		<m:Button text="Cancel" press="onCancelDialog"></m:Button>
+		</m:endButton>
+		</m:Dialog>
+    
+    
 </mvc:View>
