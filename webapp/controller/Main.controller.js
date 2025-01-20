@@ -79,8 +79,7 @@ sap.ui.define([
 		onCustomButtonPress:function (oEvent) {
             var sData = oEvent.getParameter("customData");
             MessageToast.show(sData);},
-      
-        
+
         
 			onSubmissionStart: function () {
 				console.log("Submission Started!");

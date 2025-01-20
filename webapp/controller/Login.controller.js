@@ -27,7 +27,7 @@ sap.ui.define([
                         sap.m.MessageToast.show("Server error: No role assigned");
                         return;
                     }
-        
+                    localStorage.removeItem("user");
                     localStorage.setItem("user", JSON.stringify({
                         token: userData.token,
                         role: userData.role

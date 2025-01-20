@@ -27,15 +27,15 @@ sap.ui.define([
             });
             
             this.getView().setModel(oModel);
-            
             const oCartModel = new JSONModel({
                 cartItems: []
             });
             this.getView().setModel(oCartModel, "cart");
             
-            this.getRouter().getRoute("cart").attachPatternMatched(() => {
-                this._loadCartItems(); // Reload cart items when route changes
-            });        },
+            this._loadCartItems();
+            
+            this.getRouter().getRoute("cart").attachPatternMatched(this._onRouteMatched, this);
+        },
         _onRouteMatched: function() {
             this._loadCartItems();
         },
@@ -43,12 +43,13 @@ sap.ui.define([
         _loadCartItems: async function() {
             try {
                 const oModel = this.getView().getModel();
+
                 
                 const oContext = await oModel.bindList("/getCartItems").requestContexts();
                 
                 const aCartItems = oContext.map(oContext => oContext.getObject());
                 console.log(aCartItems);
-
+                
                 const oCartModel = this.getView().getModel("cart");
                 oCartModel.setProperty("/getCartItems", aCartItems);
                 
