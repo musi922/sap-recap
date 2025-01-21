@@ -281,6 +281,41 @@ sap.ui.define([
         ,
         onCloseUsersDialog: function(){
             this.byId("usersListDialog").close()
-        }
+        },
+        onDeleteUser: async function(oEvent) {
+            const oSource = oEvent.getSource();
+            const oContext = oSource.getBindingContext("user");
+            const username = oContext.getProperty("username");
+            const ID = oContext.getProperty("ID");
+
+            MessageBox.confirm(`Are you sure you want to delete user "${username}"?`, {
+                title: "Confirm Deletion",
+                onClose: async (sAction) => {
+                    if (sAction === MessageBox.Action.OK) {
+                        try {
+                            const userData = JSON.parse(localStorage.getItem("user"));
+                            const response = await fetch(`http://localhost:4000/odata/Users('${ID}')`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Authorization': `Bearer ${userData.token}`,
+                                    'Content-Type': 'application/json'
+                                }
+                            });
+
+                            if (!response.ok) {
+                                throw new Error("Failed to delete user");
+                            }
+
+                            await this.loadUsers();
+                            MessageToast.show("User deleted successfully");
+                        } catch (error) {
+                            console.error("Error deleting user:", error);
+                            MessageBox.error("Failed to delete user");
+                        }
+                    }
+                }
+            });
+        },
+
     });
 });
