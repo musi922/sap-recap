@@ -206,7 +206,7 @@
 		<m:Dialog id="usersListDialog" title="Users List" contentWidth="50%">
         <m:Table
             id="usersTable"
-            items="{users>/Users}"
+			items="{user>/Users}"
             growing="true"
             growingScrollToLoad="true"
             growingThreshold="20">
@@ -224,12 +224,11 @@
             <m:items>
                 <m:ColumnListItem>
                     <m:cells>
-                        <m:Text text="{users>username}" />
-                        <m:Text text="{users>role}" />
+                        <m:Text text="{user>username}" />
+                        <m:Text text="{user>role}" />
                         <m:Button 
                             icon="sap-icon://delete" 
                             press="onDeleteUser"
-                            visible="{= ${users>username} !== 'admin' }"
                             type="Reject" />
                     </m:cells>
                 </m:ColumnListItem>

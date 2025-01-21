@@ -4,8 +4,8 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/ui/model/odata/v4/ODataModel",
     "sap/ui/model/odata/OperationMode",
-    "sap/f/FlexibleColumnLayoutSemanticHelper"
-], function (BaseController, MessageBox, MessageToast, ODataModel, OperationMode, FlexibleColumnLayoutSemanticHelper) {
+    "sap/ui/model/json/JSONModel"
+], function (BaseController, MessageBox, MessageToast, ODataModel, OperationMode,JSONModel) {
     "use strict";
 
     return BaseController.extend("saprecap.controller.Admin", {
@@ -28,6 +28,11 @@ sap.ui.define([
 
             this.oFlexibleColumnLayout = this.byId("flexibleColumnLayout");
             this.getRouter().getRoute("admin").attachPatternMatched(this._onRouteMatched, this);
+
+            const usersModel = new JSONModel({
+                Users:[]
+            })
+            this.getView().setModel(usersModel,"user")
         },
 
         _onRouteMatched: function() {
@@ -230,8 +235,48 @@ sap.ui.define([
             MessageBox.error(error.message || "failed to create user")
             
         }},
-        onUserDialogShow: function(){
-            this.byId("usersListDialog").open()
+        onUserDialogShow: async function(){
+            try {
+                await this.loadUsers()
+                this.byId("usersListDialog").open()
+                
+            } catch (error) {
+                console.log("failed to load users", error);
+                MessageBox.error(error || "failed to load data")
+                
+            }
+        },
+        loadUsers: async function () {
+            try {
+                const userData = JSON.parse(localStorage.getItem("user"))
+            if (!userData || !userData.token) {
+                throw new Error("Authentication token is missing");
+            }   
+
+            const response = await fetch("http://localhost:4000/odata/Users",{
+                method: 'Get',
+                headers:{
+                    'Authorization': `Bearer ${userData.token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || `Error: ${response.statusText}`);
+            }
+
+            const data = await response.json()
+            console.log("Data",data);
+            
+            const usersModel = this.getView().getModel("user")
+            console.log(usersModel);
+            
+            
+            usersModel.setProperty("/Users", data.value)
+            } catch (error) {
+                console.error("Error loading users:", error);
+                throw error;
+            }         
         }
         ,
         onCloseUsersDialog: function(){
