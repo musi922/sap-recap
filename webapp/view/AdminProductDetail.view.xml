@@ -36,23 +36,23 @@
                     id="productTabContainers"
                     selectedItem="onTabSelect">
                     <items>
-                        <TabContainerItem name="{name}" />
+                        <TabContainerItem name="{products>name}" />
                     </items>
                 </TabContainer>
                 <VBox class="sapUiSmallMarginBottom sapUiTinyMarginTop">
-                    <Title text="{name}" />
-                    <Label text="{ProductId}" />
+                    <Title text="{products>name}" />
+                    <Label text="{products>ProductId}" />
                 </VBox>
                 <layout:HorizontalLayout>
                     <HBox class="horizonta">
                         <Image
-                            src="{productPicUrl}"
+                            src="{products>productPicUrl}"
                             width="4rem"
                         />
                         <VBox class="sapUiSmallMarginEnd">
                             <Label text="Price:" />
                             <ObjectNumber
-                                number="{price}"
+                                number="{products>price}"
                                 unit="USD"
                                 class="price"
                             />
@@ -60,8 +60,8 @@
                         <VBox class="sapUiSmallMarginEnd">
                             <Label text="Availability:" />
                             <ObjectStatus
-                                text="{status}"
-                                state="{= ${status} === 'In Stock' ? 'Success' : 'Error'}"
+                                text="{products>status}"
+                                state="{= ${products>status} === 'In Stock' ? 'Success' : 'Error'}"
                                 class="price"
                             />
                         </VBox>
@@ -69,16 +69,16 @@
                             <Label text="General Information:" />
                             <HBox>
                                 <Label text="Category:" />
-                                <Text text="{category}" />
+                                <Text text="{products>category}" />
                             </HBox>
                             <HBox>
                                 <Label text="Sub-Category:" />
-                                <Text text="{mainCategory}" />
+                                <Text text="{products>mainCategory}" />
                             </HBox>
                             <HBox>
                                 <Label text="Supplier:" />
                                 <Text
-                                    text="{supplierName}"
+                                    text="{products>supplierName}"
                                     class="bluees"
                                 />
                             </HBox>
@@ -88,14 +88,14 @@
                             <Label text="Description:" />
                             <Text
                                 width="200px"
-                                text="{description}"
+                                text="{products>description}"
                             />
                         </VBox>
                         <VBox>
                             <Label text="Rating:" />
                             <Text text="Average Rating" />
                             <RatingIndicator
-                                value="{rating}"
+                                value="{products>rating}"
                                 maxValue="5"
                             />
                             <Text
@@ -118,11 +118,11 @@
                                     class="sapUiSmallMarginBottom"
                                 />
                                 <Label
-                                    text="{height} x {width} x {depth} CM"
+                                    text="{products>height} x {products>width} x {products>depth} CM"
                                 />
                                 <Label text="Weight:" />
                                 <Label
-                                    text="{weightMeasure} {weightUnit}"
+                                    text="{products>weightMeasure} {products>weightUnit}"
                                 />
                             </VBox>
                             
@@ -161,32 +161,7 @@
                 </uxap:subSections>
             </uxap:ObjectPageSection>
             
-            <uxap:ObjectPageSection title="Reviews and Ratings">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection>
-                        <uxap:blocks>
-                            <VBox class="sapUiSmallMargin">
-                                <RatingIndicator value="{rating}" maxValue="5" />
-                                <Text text="Based on customer reviews" class="sapUiTinyMarginBottom" />
-                                <List
-                                    items="{reviews>/}"
-                                    noDataText="No reviews available">
-                                    <CustomListItem>
-                                        <VBox class="sapUiTinyMargin">
-                                            <HBox>
-                                                <RatingIndicator value="{reviews>rating}" maxValue="5" />
-                                                <Text text="{reviews>date}" class="sapUiTinyMarginBegin" />
-                                            </HBox>
-                                            <Text text="{reviews>comment}" />
-                                            <Text text="By {reviews>reviewer}" class="sapUiTinyMarginTop" />
-                                        </VBox>
-                                    </CustomListItem>
-                                </List>
-                            </VBox>
-                        </uxap:blocks>
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection>
+            
         </uxap:sections>
     </uxap:ObjectPageLayout>
 </mvc:View>
