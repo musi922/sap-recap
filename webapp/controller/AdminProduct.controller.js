@@ -9,16 +9,15 @@ sap.ui.define([
     return BaseController.extend("saprecap.controller.AdminProduct", {
         onInit: function() {
             this.oEventBus = sap.ui.getCore().getEventBus();
-            
             this.getView().attachModelContextChange(this._onModelContextChange, this);
         },
 
         _onModelContextChange: function(oEvent) {
             try {
                 const oContext = this.getView().getBindingContext("products");
+                
                 if (oContext) {
-                    const oProduct = oContext.getObject();
-                    console.log("Product details loaded:", oProduct);
+                    console.log("Product details loaded:");
                     
                     
                 }

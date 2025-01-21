@@ -19,11 +19,7 @@
                     </HBox>
                 </uxap:heading>
                 <uxap:actions>
-                    <Button
-                        icon="sap-icon://nav-back"
-                        press="onNavBack"
-                        text="Back"
-                    />
+                   
                     <Button icon="sap-icon://decline" 
                         press="onCloseDetailPress"
                         tooltip="Close column"/>
@@ -145,15 +141,15 @@
                                 <form:content>
                                     <core:Title text="Technical Details" />
                                     <Label text="Material" />
-                                    <Text text="{material}" />
-                                    <Label text="Processing Time" />
-                                    <Text text="{processingTime}" />
+                                    <Text text="{products>category}" />
+                                    <Label text="Is in Cart" />
+                                    <Text text="{products>isInCart}" />
                                     
                                     <core:Title text="Additional Information" />
                                     <Label text="Manufacturer" />
-                                    <Text text="{manufacturer}" />
-                                    <Label text="Warranty Period" />
-                                    <Text text="{warrantyPeriod}" />
+                                    <Text text="{products>supplierName}" />
+                                    <Label text="Tax Tarif Code" />
+                                    <Text text="{products>taxTarifCode}" />
                                 </form:content>
                             </form:SimpleForm>
                         </uxap:blocks>
