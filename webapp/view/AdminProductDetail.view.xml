@@ -1,0 +1,192 @@
+<mvc:View
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:uxap="sap.uxap"
+    controllerName="saprecap.controller.AdminProduct"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    height="100%">
+    
+    <uxap:ObjectPageLayout id="ObjectPageLayoutss" class="ObjectPageLayout">
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle class="dd">
+                <uxap:heading>
+                    <HBox alignItems="Center">
+                        <Avatar displaySize="S" class="sapUiTinyMarginEnd"/>
+                        <Title text="Product Details" wrapping="true" class="detailsProduct"/>
+                    </HBox>
+                </uxap:heading>
+                <uxap:actions>
+                    <Button
+                        icon="sap-icon://nav-back"
+                        press="onNavBack"
+                        text="Back"
+                    />
+                    <Button icon="sap-icon://decline" 
+                        press="onCloseDetailPress"
+                        tooltip="Close column"/>
+                </uxap:actions>
+            </uxap:ObjectPageDynamicHeaderTitle>
+        </uxap:headerTitle>
+        <uxap:headerContent>
+            <VBox>
+                <TabContainer
+                    id="productTabContainers"
+                    selectedItem="onTabSelect">
+                    <items>
+                        <TabContainerItem name="{name}" />
+                    </items>
+                </TabContainer>
+                <VBox class="sapUiSmallMarginBottom sapUiTinyMarginTop">
+                    <Title text="{name}" />
+                    <Label text="{ProductId}" />
+                </VBox>
+                <layout:HorizontalLayout>
+                    <HBox class="horizonta">
+                        <Image
+                            src="{productPicUrl}"
+                            width="4rem"
+                        />
+                        <VBox class="sapUiSmallMarginEnd">
+                            <Label text="Price:" />
+                            <ObjectNumber
+                                number="{price}"
+                                unit="USD"
+                                class="price"
+                            />
+                        </VBox>
+                        <VBox class="sapUiSmallMarginEnd">
+                            <Label text="Availability:" />
+                            <ObjectStatus
+                                text="{status}"
+                                state="{= ${status} === 'In Stock' ? 'Success' : 'Error'}"
+                                class="price"
+                            />
+                        </VBox>
+                        <VBox class="sapUiSmallMarginEnd">
+                            <Label text="General Information:" />
+                            <HBox>
+                                <Label text="Category:" />
+                                <Text text="{category}" />
+                            </HBox>
+                            <HBox>
+                                <Label text="Sub-Category:" />
+                                <Text text="{mainCategory}" />
+                            </HBox>
+                            <HBox>
+                                <Label text="Supplier:" />
+                                <Text
+                                    text="{supplierName}"
+                                    class="bluees"
+                                />
+                            </HBox>
+                        </VBox>
+
+                        <VBox class="sapUiSmallMarginEnd">
+                            <Label text="Description:" />
+                            <Text
+                                width="200px"
+                                text="{description}"
+                            />
+                        </VBox>
+                        <VBox>
+                            <Label text="Rating:" />
+                            <Text text="Average Rating" />
+                            <RatingIndicator
+                                value="{rating}"
+                                maxValue="5"
+                            />
+                            <Text
+                                text="Out of 5 ratings"
+                                class="bluees"
+                            />
+                        </VBox>
+                    </HBox>
+                </layout:HorizontalLayout>
+            </VBox>
+        </uxap:headerContent>
+        <uxap:sections>
+            <uxap:ObjectPageSection title="Product Information">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <VBox class="sapUiSmallMargin">
+                                <Label
+                                    text="Product Dimensions (Height x Width x Depth)"
+                                    class="sapUiSmallMarginBottom"
+                                />
+                                <Label
+                                    text="{height} x {width} x {depth} CM"
+                                />
+                                <Label text="Weight:" />
+                                <Label
+                                    text="{weightMeasure} {weightUnit}"
+                                />
+                            </VBox>
+                            
+                            <form:SimpleForm
+                                editable="true"
+                                layout="ResponsiveGridLayout"
+                                labelSpanXL="4"
+                                labelSpanL="4"
+                                labelSpanM="4"
+                                labelSpanS="12"
+                                adjustLabelSpan="false"
+                                emptySpanXL="0"
+                                emptySpanL="0"
+                                emptySpanM="0"
+                                emptySpanS="0"
+                                columnsXL="2"
+                                columnsL="2"
+                                columnsM="2"
+                                class="sapUiSmallMargin">
+                                <form:content>
+                                    <core:Title text="Technical Details" />
+                                    <Label text="Material" />
+                                    <Text text="{material}" />
+                                    <Label text="Processing Time" />
+                                    <Text text="{processingTime}" />
+                                    
+                                    <core:Title text="Additional Information" />
+                                    <Label text="Manufacturer" />
+                                    <Text text="{manufacturer}" />
+                                    <Label text="Warranty Period" />
+                                    <Text text="{warrantyPeriod}" />
+                                </form:content>
+                            </form:SimpleForm>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+            
+            <uxap:ObjectPageSection title="Reviews and Ratings">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <VBox class="sapUiSmallMargin">
+                                <RatingIndicator value="{rating}" maxValue="5" />
+                                <Text text="Based on customer reviews" class="sapUiTinyMarginBottom" />
+                                <List
+                                    items="{reviews>/}"
+                                    noDataText="No reviews available">
+                                    <CustomListItem>
+                                        <VBox class="sapUiTinyMargin">
+                                            <HBox>
+                                                <RatingIndicator value="{reviews>rating}" maxValue="5" />
+                                                <Text text="{reviews>date}" class="sapUiTinyMarginBegin" />
+                                            </HBox>
+                                            <Text text="{reviews>comment}" />
+                                            <Text text="By {reviews>reviewer}" class="sapUiTinyMarginTop" />
+                                        </VBox>
+                                    </CustomListItem>
+                                </List>
+                            </VBox>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
+    </uxap:ObjectPageLayout>
+</mvc:View>

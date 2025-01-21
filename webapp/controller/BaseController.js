@@ -6,7 +6,6 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("saprecap.controller.BaseController", {
-        // Authentication methods
         checkAuth: function() {
             const userData = localStorage.getItem("user");
             if (!userData) {
@@ -30,7 +29,6 @@ sap.ui.define([
             this.navTo("login");
         },
 
-        // Your existing utility methods
         getOwnerComponent: function () {
             return Controller.prototype.getOwnerComponent.call(this);
         },

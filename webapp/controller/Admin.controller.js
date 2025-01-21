@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/m/MessageBox",
     "sap/m/MessageToast",
     "sap/ui/model/odata/v4/ODataModel",
-    "sap/ui/model/odata/OperationMode"
-], function (BaseController, MessageBox, MessageToast, ODataModel, OperationMode) {
+    "sap/ui/model/odata/OperationMode",
+    "sap/f/FlexibleColumnLayoutSemanticHelper"
+], function (BaseController, MessageBox, MessageToast, ODataModel, OperationMode, FlexibleColumnLayoutSemanticHelper) {
     "use strict";
 
     return BaseController.extend("saprecap.controller.Admin", {
@@ -24,6 +25,53 @@ sap.ui.define([
                 }
             });
             this.getView().setModel(oModel, "products");
+
+            this.oFlexibleColumnLayout = this.byId("flexibleColumnLayout");
+            this.getRouter().getRoute("admin").attachPatternMatched(this._onRouteMatched, this);
+        },
+
+        _onRouteMatched: function() {
+            this._updateFlexibleColumnLayout("OneColumn");
+        },
+
+        onProductItemPress: function(oEvent) {
+            try {
+                const oItem = oEvent.getSource();
+                const oContext = oItem.getBindingContext("products");
+                
+                if (!oContext) {
+                    console.error("No binding context found");
+                    return;
+                }
+
+                const oProduct = oContext.getObject();
+                
+                if (!oProduct || !oProduct.ProductId) {
+                    console.error("Product data or ProductId not found", oProduct);
+                    return;
+                }
+
+                this._updateFlexibleColumnLayout("TwoColumnsMidExpanded");
+                
+                const oDetailView = this.byId("flexibleColumnLayout").getMidColumnPages()[0];
+                if (oDetailView) {
+                    oDetailView.bindElement({
+                        path: `/Products('${oProduct.ProductId}')`,
+                        model: "products"
+                    });
+                } else {
+                    console.error("Detail view not found");
+                }
+            } catch (error) {
+                console.error("Error in onProductItemPress:", error);
+                MessageBox.error("Error displaying product details");
+            }
+        },
+
+        _updateFlexibleColumnLayout: function(sLayout) {
+            if (this.oFlexibleColumnLayout) {
+                this.oFlexibleColumnLayout.setLayout(sLayout);
+            }
         },
 
         onDeletePress: function (oEvent) {

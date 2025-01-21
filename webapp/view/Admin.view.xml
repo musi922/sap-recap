@@ -6,6 +6,10 @@
     xmlns:mvc="sap.ui.core.mvc"
     controllerName="saprecap.controller.Admin"
     >
+	<F:FlexibleColumnLayout id="flexibleColumnLayout"
+        layout="TwoColumnsMidExpanded"
+        backgroundDesign="Solid">
+		<F:beginColumnPages>
     <ObjectPageLayout id="ObjectPageLayouts" showTitleInHeaderContent="true" alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false"
     headerContentPinnable="true" isChildPage="true" upperCaseAnchorBar="false">
   <headerTitle>
@@ -81,7 +85,9 @@
                 growing="true"
                 growingScrollToLoad="true"
                 growingThreshold="20"
-                mode="MultiSelect">
+                 itemPress="onProductItemPress"
+				
+                mode="SingleSelect">
                 <m:headerToolbar>
                     <m:Toolbar>
                         <m:Title text="Products" level="H2" />
@@ -114,7 +120,7 @@
                     </m:Column>
                 </m:columns>
                 <m:items>
-                    <m:ColumnListItem>
+                    <m:ColumnListItem type="Navigation" press="onProductItemPress">
                         <m:cells>
                             <m:Image src="{products>productPicUrl}" width="6rem" />
                             <m:Text text="{products>ProductId}" />
@@ -141,6 +147,12 @@
 </sections>
 
     </ObjectPageLayout>
+	</F:beginColumnPages>
+	 <F:midColumnPages>
+	 <mvc:XMLView viewName="saprecap.view.AdminProductDetail"></mvc:XMLView>
+	 </F:midColumnPages>
+	</F:FlexibleColumnLayout>
+	
      <m:Dialog id="editDiolog">
 		<m:VBox >
 		<form:SimpleForm >
