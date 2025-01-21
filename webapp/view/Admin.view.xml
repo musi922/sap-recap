@@ -17,7 +17,8 @@
 		<breadcrumbs>
 			<m:Breadcrumbs currentLocationText="My Profile">
 				<m:Link text='Moyo Tech' />
-				<m:Link text='Create Users' />
+				<m:Link text='Create Users' press="onCreateUserDialog"/>
+				<m:Link text='Users' />
 			</m:Breadcrumbs>
 		</breadcrumbs>
 
@@ -178,6 +179,27 @@
 		</m:beginButton>
 		<m:endButton >
 		<m:Button text="Cancel" press="onCancelDialog"></m:Button>
+		</m:endButton>
+		</m:Dialog>
+
+		
+		<m:Dialog id="createUserDialog" title="Create a User">
+		<m:VBox >
+		<form:SimpleForm >
+		<m:Label text="User Name"/>
+		<m:Input id="userName"/>
+		<m:Label text="Password"/>
+		<m:Input id="passwor"/>
+		<m:Label text="role"/>
+		<m:Input id="role"/>
+		
+		</form:SimpleForm>
+		</m:VBox>
+		<m:beginButton >
+		<m:Button text="Create" press="onConfirmCreate"></m:Button>
+		</m:beginButton>
+		<m:endButton >
+		<m:Button text="Cancel" press="onCancelCreate"></m:Button>
 		</m:endButton>
 		</m:Dialog>
     

@@ -171,6 +171,63 @@ sap.ui.define([
 
         onLogoutPress: function() {
             this.logout();
+        },
+        onCreateUserDialog: function() {
+            this.byId("createUserDialog").open(); 
+        },
+        onCancelCreate: function() {
+            this.byId("createUserDialog").close();
+            },
+
+        onConfirmCreate: async function() {
+            try {
+                const username = this.byId("userName").getValue();
+                const password = this.byId("passwor").getValue();
+                const role = this.byId("role").getValue();
+
+                if (!username || !password || !role) {
+                    MessageBox.error("Please fill all fields")
+                    return;
+                }
+                if (role !== 'user') {
+                    MessageBox.error("Role must be user")
+                }
+            const userData  = JSON.parse(localStorage.getItem("user"))
+            if (!userData || !userData.token) {
+                throw new Error("Authontication is missing")
+                
+            }
+
+            const response = await fetch('http://localhost:4000/odata/createUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userData.token}`
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    role: role
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || `Error: ${response.statusText}`);
+            }
+            MessageBox.success("User created successfully", {
+                onClose: () => {
+                    this.byId("createUserDialog").close();
+                    this.byId("userName").setValue("");
+                    this.byId("passwor").setValue("");
+                    this.byId("role").setValue("");
+                }
+            });
         }
+        catch (error){
+            console.log("there was error while create a user", error);
+            MessageBox.error(error.message || "failed to create user")
+            
+        }}
     });
 });
