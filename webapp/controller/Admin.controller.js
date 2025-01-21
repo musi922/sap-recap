@@ -191,6 +191,7 @@ sap.ui.define([
                 }
                 if (role !== 'user') {
                     MessageBox.error("Role must be user")
+                    return
                 }
             const userData  = JSON.parse(localStorage.getItem("user"))
             if (!userData || !userData.token) {
@@ -228,6 +229,13 @@ sap.ui.define([
             console.log("there was error while create a user", error);
             MessageBox.error(error.message || "failed to create user")
             
-        }}
+        }},
+        onUserDialogShow: function(){
+            this.byId("usersListDialog").open()
+        }
+        ,
+        onCloseUsersDialog: function(){
+            this.byId("usersListDialog").close()
+        }
     });
 });

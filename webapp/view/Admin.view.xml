@@ -18,7 +18,7 @@
 			<m:Breadcrumbs currentLocationText="My Profile">
 				<m:Link text='Moyo Tech' />
 				<m:Link text='Create Users' press="onCreateUserDialog"/>
-				<m:Link text='Users' />
+				<m:Link text='Users' press="onUserDialogShow"/>
 			</m:Breadcrumbs>
 		</breadcrumbs>
 
@@ -182,7 +182,7 @@
 		</m:endButton>
 		</m:Dialog>
 
-		
+
 		<m:Dialog id="createUserDialog" title="Create a User">
 		<m:VBox >
 		<form:SimpleForm >
@@ -202,6 +202,43 @@
 		<m:Button text="Cancel" press="onCancelCreate"></m:Button>
 		</m:endButton>
 		</m:Dialog>
+
+		<m:Dialog id="usersListDialog" title="Users List" contentWidth="50%">
+        <m:Table
+            id="usersTable"
+            items="{users>/Users}"
+            growing="true"
+            growingScrollToLoad="true"
+            growingThreshold="20">
+            <m:columns>
+                <m:Column>
+                    <m:Text text="Username" />
+                </m:Column>
+                <m:Column>
+                    <m:Text text="Role" />
+                </m:Column>
+                <m:Column>
+                    <m:Text text="Actions" />
+                </m:Column>
+            </m:columns>
+            <m:items>
+                <m:ColumnListItem>
+                    <m:cells>
+                        <m:Text text="{users>username}" />
+                        <m:Text text="{users>role}" />
+                        <m:Button 
+                            icon="sap-icon://delete" 
+                            press="onDeleteUser"
+                            visible="{= ${users>username} !== 'admin' }"
+                            type="Reject" />
+                    </m:cells>
+                </m:ColumnListItem>
+            </m:items>
+        </m:Table>
+        <m:endButton>
+            <m:Button text="Close" press="onCloseUsersDialog" />
+        </m:endButton>
+    </m:Dialog>
     
     
 </mvc:View>
